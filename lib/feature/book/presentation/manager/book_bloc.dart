@@ -13,9 +13,10 @@ class BookCubit extends Cubit<BookState> {
   BookCubit(this.getBooks) : super(BookState(status: BookStatus.initial));
 
   void fetchBooks({required String query, required int page}) async {
+    if(page == 1) {
+      emit(state.copyWith(status: BookStatus.loading, books: []));
+    }
     emit(state.copyWith(status: BookStatus.loading));
-
-    print(state.status);
     try {
       final books = await getBooks(query: query, page: page);
       final updatedBooks = List<Book>.from(state.books)..addAll(books);

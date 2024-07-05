@@ -7,8 +7,9 @@ import 'package:palm_code_mobile/feature/book/presentation/pages/book_detail_pag
 
 class BookList extends StatefulWidget {
   final bool isLikedBooks;
+  final bool isSearch;
 
-  BookList({this.isLikedBooks = false});
+  BookList({this.isLikedBooks = false, this.isSearch = false});
 
   @override
   _BookListState createState() => _BookListState();
@@ -23,14 +24,15 @@ class _BookListState extends State<BookList> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    if (context.read<BookCubit>().state.books.isEmpty) {
+    if (context.read<BookCubit>().state.books.isEmpty && !widget.isSearch) {
       getIt<BookCubit>().fetchBooks(query: _query, page: _page);
     }
   }
 
   void _onScroll() {
     if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
+            _scrollController.position.maxScrollExtent &&
+        !widget.isSearch) {
       getIt<BookCubit>().fetchBooks(query: _query, page: ++_page);
     }
   }

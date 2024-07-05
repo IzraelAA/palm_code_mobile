@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:palm_code_mobile/core/di/injection.dart';
-import 'package:palm_code_mobile/feature/book/data/repositories/book_repository.dart';
 import 'package:palm_code_mobile/feature/book/presentation/manager/book_bloc.dart';
 import 'package:palm_code_mobile/feature/book/presentation/widgets/book_list.dart';
 
@@ -34,7 +32,7 @@ class BookSearch extends SearchDelegate {
       query: query,
       page: 1,
     );
-    return BookList();
+    return BookList(isSearch: true,);
   }
 
   @override
